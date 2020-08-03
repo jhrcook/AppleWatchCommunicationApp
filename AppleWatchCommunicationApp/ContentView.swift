@@ -8,29 +8,47 @@
 
 import SwiftUI
 
-struct ContentView: View {
+
+struct PlantRow: View {
+    
+    @ObservedObject var garden: Garden
+    var plant: Plant
+    
     var body: some View {
-        
-        ZStack {
+        HStack {
+            plant.loadPlantImage()
+                .resizable()
+                .scaledToFit()
+                .frame(width: 50)
+                .clipShape(Circle())
             
-            LinearGradient(gradient: Gradient(colors: [.blue, .green]), startPoint: .topLeading, endPoint: .bottomTrailing)
-                .edgesIgnoringSafeArea(.all)
-                .opacity(1)
+            Text(plant.name)
             
-            VStack {
-                Text("Apple Watch Communication")
-                    .font(.system(size: 29, weight: .bold, design: .default))
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .padding(EdgeInsets(top: 10, leading: 5, bottom: 0, trailing: 5))
-                
-                RoundedRectangle(cornerRadius: 5, style: .circular)
-                    .frame(height: 2)
-                    .padding(.horizontal, 40)
-                    .foregroundColor(.white)
-                
-                Spacer()
+            Spacer()
+            
+            Image(systemName: "cloud.rain")
+                .foregroundColor(.black)
+                .font(.system(size: 20, weight: .regular, design: .default))
+                .opacity(plant.watered ? 1 : 0)
+        }
+    }
+}
+
+
+struct ContentView: View {
+    
+    @ObservedObject var garden = Garden()
+    
+    var body: some View {
+        NavigationView {
+            List {
+                ForEach(garden.plants) { plant in
+                    NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant)) {
+                        PlantRow(garden: self.garden, plant: plant)
+                    }
+                }
             }
+            .navigationBarTitle("Garden")
         }
     }
 }
