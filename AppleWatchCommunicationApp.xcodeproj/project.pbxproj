@@ -30,6 +30,8 @@
 		845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4B524D96E0B00ED5BBB /* GardenListView.swift */; };
 		845DA4B724D9701600ED5BBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F524D75AED004F3F20 /* Assets.xcassets */; };
 		845DA4B924D9711000ED5BBB /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4B824D9711000ED5BBB /* PlantDetailView.swift */; };
+		845DA4C024D9849900ED5BBB /* PhoneToWatchCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */; };
+		845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4C124D9866100ED5BBB /* PlantRow.swift */; };
 		84A346F024D75AEB004F3F20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346EF24D75AEB004F3F20 /* AppDelegate.swift */; };
 		84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346F124D75AEB004F3F20 /* SceneDelegate.swift */; };
 		84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346F324D75AEB004F3F20 /* ContentView.swift */; };
@@ -103,6 +105,8 @@
 		845DA4A624D96D8700ED5BBB /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		845DA4B524D96E0B00ED5BBB /* GardenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenListView.swift; sourceTree = "<group>"; };
 		845DA4B824D9711000ED5BBB /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
+		845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneToWatchCommunicator.swift; sourceTree = "<group>"; };
+		845DA4C124D9866100ED5BBB /* PlantRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantRow.swift; sourceTree = "<group>"; };
 		84A346EC24D75AEB004F3F20 /* AppleWatchCommunicationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWatchCommunicationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A346EF24D75AEB004F3F20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A346F124D75AEB004F3F20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,14 +148,11 @@
 		845DA49324D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension */ = {
 			isa = PBXGroup;
 			children = (
-				845DA49424D96D8600ED5BBB /* ContentView.swift */,
-				845DA4B524D96E0B00ED5BBB /* GardenListView.swift */,
-				845DA4B824D9711000ED5BBB /* PlantDetailView.swift */,
+				845DA4BC24D9842900ED5BBB /* Views */,
 				845DA49624D96D8600ED5BBB /* HostingController.swift */,
 				845DA49824D96D8600ED5BBB /* ExtensionDelegate.swift */,
-				845DA49A24D96D8600ED5BBB /* NotificationController.swift */,
-				845DA49C24D96D8600ED5BBB /* NotificationView.swift */,
-				845DA49E24D96D8600ED5BBB /* ComplicationController.swift */,
+				845DA4BE24D9843C00ED5BBB /* Notifications */,
+				845DA4BD24D9843400ED5BBB /* Complications */,
 				845DA4A024D96D8700ED5BBB /* Assets.xcassets */,
 				845DA4A524D96D8700ED5BBB /* Info.plist */,
 				845DA4A624D96D8700ED5BBB /* PushNotificationPayload.apns */,
@@ -166,6 +167,53 @@
 				845DA4A324D96D8700ED5BBB /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		845DA4BA24D983A800ED5BBB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8442511524D830B9002292D7 /* Plant.swift */,
+				8442511B24D832A6002292D7 /* Garden.swift */,
+				845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		845DA4BB24D9841000ED5BBB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				84A346F324D75AEB004F3F20 /* ContentView.swift */,
+				845DA4C124D9866100ED5BBB /* PlantRow.swift */,
+				8442511D24D837F5002292D7 /* PlantDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		845DA4BC24D9842900ED5BBB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				845DA49424D96D8600ED5BBB /* ContentView.swift */,
+				845DA4B524D96E0B00ED5BBB /* GardenListView.swift */,
+				845DA4B824D9711000ED5BBB /* PlantDetailView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		845DA4BD24D9843400ED5BBB /* Complications */ = {
+			isa = PBXGroup;
+			children = (
+				845DA49E24D96D8600ED5BBB /* ComplicationController.swift */,
+			);
+			path = Complications;
+			sourceTree = "<group>";
+		};
+		845DA4BE24D9843C00ED5BBB /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				845DA49A24D96D8600ED5BBB /* NotificationController.swift */,
+				845DA49C24D96D8600ED5BBB /* NotificationView.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		84A346E324D75AEB004F3F20 = {
@@ -193,10 +241,8 @@
 			children = (
 				84A346EF24D75AEB004F3F20 /* AppDelegate.swift */,
 				84A346F124D75AEB004F3F20 /* SceneDelegate.swift */,
-				84A346F324D75AEB004F3F20 /* ContentView.swift */,
-				8442511524D830B9002292D7 /* Plant.swift */,
-				8442511D24D837F5002292D7 /* PlantDetailView.swift */,
-				8442511B24D832A6002292D7 /* Garden.swift */,
+				845DA4BB24D9841000ED5BBB /* Views */,
+				845DA4BA24D983A800ED5BBB /* Models */,
 				8442511724D831EF002292D7 /* utilities.swift */,
 				8442511924D83218002292D7 /* ImagePicker.swift */,
 				84A346F524D75AED004F3F20 /* Assets.xcassets */,
@@ -371,9 +417,11 @@
 				84A346F024D75AEB004F3F20 /* AppDelegate.swift in Sources */,
 				8442511824D831EF002292D7 /* utilities.swift in Sources */,
 				8442511624D830B9002292D7 /* Plant.swift in Sources */,
+				845DA4C024D9849900ED5BBB /* PhoneToWatchCommunicator.swift in Sources */,
 				8442511A24D83218002292D7 /* ImagePicker.swift in Sources */,
 				8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */,
 				84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */,
+				845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */,
 				84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
