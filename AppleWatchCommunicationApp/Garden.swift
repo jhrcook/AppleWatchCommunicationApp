@@ -10,7 +10,7 @@ import SwiftUI
 
 class Garden: ObservableObject {
     
-    static private let inTesting = true
+    static private let inTesting = false
     
     @Published var plants = [Plant]() {
         didSet {

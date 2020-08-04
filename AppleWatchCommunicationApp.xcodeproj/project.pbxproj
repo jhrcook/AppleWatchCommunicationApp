@@ -27,6 +27,9 @@
 		845DA4B224D96DC200ED5BBB /* Plant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511524D830B9002292D7 /* Plant.swift */; };
 		845DA4B324D96DC200ED5BBB /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511B24D832A6002292D7 /* Garden.swift */; };
 		845DA4B424D96DC200ED5BBB /* utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511724D831EF002292D7 /* utilities.swift */; };
+		845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4B524D96E0B00ED5BBB /* GardenListView.swift */; };
+		845DA4B724D9701600ED5BBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F524D75AED004F3F20 /* Assets.xcassets */; };
+		845DA4B924D9711000ED5BBB /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845DA4B824D9711000ED5BBB /* PlantDetailView.swift */; };
 		84A346F024D75AEB004F3F20 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346EF24D75AEB004F3F20 /* AppDelegate.swift */; };
 		84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346F124D75AEB004F3F20 /* SceneDelegate.swift */; };
 		84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A346F324D75AEB004F3F20 /* ContentView.swift */; };
@@ -98,6 +101,8 @@
 		845DA4A324D96D8700ED5BBB /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		845DA4A524D96D8700ED5BBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		845DA4A624D96D8700ED5BBB /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		845DA4B524D96E0B00ED5BBB /* GardenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenListView.swift; sourceTree = "<group>"; };
+		845DA4B824D9711000ED5BBB /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		84A346EC24D75AEB004F3F20 /* AppleWatchCommunicationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleWatchCommunicationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84A346EF24D75AEB004F3F20 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84A346F124D75AEB004F3F20 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				845DA49424D96D8600ED5BBB /* ContentView.swift */,
+				845DA4B524D96E0B00ED5BBB /* GardenListView.swift */,
+				845DA4B824D9711000ED5BBB /* PlantDetailView.swift */,
 				845DA49624D96D8600ED5BBB /* HostingController.swift */,
 				845DA49824D96D8600ED5BBB /* ExtensionDelegate.swift */,
 				845DA49A24D96D8600ED5BBB /* NotificationController.swift */,
@@ -320,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				845DA4A424D96D8700ED5BBB /* Preview Assets.xcassets in Resources */,
+				845DA4B724D9701600ED5BBB /* Assets.xcassets in Resources */,
 				845DA4A124D96D8700ED5BBB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -345,9 +353,11 @@
 				845DA4B324D96DC200ED5BBB /* Garden.swift in Sources */,
 				845DA49724D96D8600ED5BBB /* HostingController.swift in Sources */,
 				845DA49524D96D8600ED5BBB /* ContentView.swift in Sources */,
+				845DA4B924D9711000ED5BBB /* PlantDetailView.swift in Sources */,
 				845DA49B24D96D8600ED5BBB /* NotificationController.swift in Sources */,
 				845DA49924D96D8600ED5BBB /* ExtensionDelegate.swift in Sources */,
 				845DA4B224D96DC200ED5BBB /* Plant.swift in Sources */,
+				845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */,
 				845DA49D24D96D8600ED5BBB /* NotificationView.swift in Sources */,
 				845DA49F24D96D8600ED5BBB /* ComplicationController.swift in Sources */,
 			);
