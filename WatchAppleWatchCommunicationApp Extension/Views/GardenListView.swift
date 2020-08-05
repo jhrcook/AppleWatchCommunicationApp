@@ -10,7 +10,7 @@ import SwiftUI
 
 
 
-struct GardenListView: View {
+struct GardenListView: View, GardenDelegate {
     
     @ObservedObject var garden: Garden
     var phoneCommunicator: WatchToPhoneCommunicator
@@ -33,7 +33,16 @@ struct GardenListView: View {
                 }
             }
         }
+        .onAppear {
+            self.phoneCommunicator.gardenDelegate = self
+        }
     }
+    
+    func gardenPlantsWereUpdated() {
+        garden.reloadPlants()
+        garden.sortPlants()
+    }
+    
 }
 
 struct GardenListView_Previews: PreviewProvider {

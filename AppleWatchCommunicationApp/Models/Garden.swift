@@ -19,25 +19,33 @@ class Garden: ObservableObject {
     }
     
     init() {
-        
         if (Garden.inTesting) {
             print("Making mock plants for testing.")
             self.plants = mockPlants()
             sortPlants()
             return
         }
-        
+        self.plants = Garden.loadPlants()
+        self.sortPlants()
+    }
+    
+    
+    static func loadPlants() -> [Plant] {
         if let encodedPlants = UserDefaults.standard.data(forKey: "garden.plants") {
             let decoder = JSONDecoder()
             if let decodedPlants = try? decoder.decode([Plant].self, from: encodedPlants) {
-                self.plants = decodedPlants
-                sortPlants()
-                return
+                return decodedPlants
             }
         }
-        
-        print("Unable to read in plants - setting empty array.")
-        self.plants = [Plant]()
+        print("Unable to load plants data.")
+        return [Plant]()
+    }
+    
+    
+    func reloadPlants() {
+        DispatchQueue.main.async {
+            self.plants = Garden.loadPlants()
+        }
     }
     
     
@@ -51,7 +59,9 @@ class Garden: ObservableObject {
     
     
     func sortPlants() {
-        plants.sort { $0.name < $1.name }
+        DispatchQueue.main.async {
+            self.plants.sort { $0.name < $1.name }
+        }
     }
     
     func update(_ plant: Plant, updatePlantOrder: Bool = true) {

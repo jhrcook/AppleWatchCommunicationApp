@@ -10,14 +10,19 @@ import SwiftUI
 
 struct Plant: Codable, Identifiable {
     
-    let id: UUID
+    let id: String
     var name: String
     
     var watered: Bool = false
     var imageName: String? = nil
     
     init(name: String) {
-        id = UUID()
+        id = UUID().uuidString
+        self.name = name
+    }
+    
+    init(id: String, name: String) {
+        self.id = id
         self.name = name
     }
     

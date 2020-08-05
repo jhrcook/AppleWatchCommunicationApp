@@ -29,7 +29,8 @@ class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
             return
         }
         print("Activated without error.")
-        compareGardens()
+//        compareGardens()
+        replaceAppleWatchGarden()
     }
     
     
@@ -74,6 +75,48 @@ extension PhoneToWatchCommunicator {
         }, errorHandler: { error in
             print("Error in sending message: \(error.localizedDescription)")
         })
-        
     }
+    
+    
+    func replaceAppleWatchGarden() {
+        if !checkConnectivityWithWatch() {
+            print("Watch not connected.")
+            return
+        }
+        
+        let applicationContext: [String: Any] = ["plants": convert(Garden().plants)]
+        do {
+            try session.updateApplicationContext(applicationContext)
+        } catch {
+            print("Error in updating application context.")
+            print("error: \(error.localizedDescription)")
+        }
+    }
+    
+    func convert(_ plants: [Plant]) -> [String: Any] {
+        var plantsDict = [String: Any]()
+        for plant in plants {
+            let plantData: SinglePlantDictionary = convert(plant)
+            plantsDict[plantData.id] = plantData.dict
+        }
+        return plantsDict
+    }
+    
+    
+    struct SinglePlantDictionary {
+        var id: String
+        var dict: [String: Any]
+    }
+    
+    func convert(_ plant: Plant) -> SinglePlantDictionary {
+        return SinglePlantDictionary(
+            id: plant.id,
+            dict: [
+                "name": plant.name,
+                "watered": plant.watered,
+                "imageName": plant.imageName ?? "nil",
+            ]
+        )
+    }
+    
 }
