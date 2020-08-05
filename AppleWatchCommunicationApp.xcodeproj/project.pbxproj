@@ -38,6 +38,7 @@
 		84A346F624D75AED004F3F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F524D75AED004F3F20 /* Assets.xcassets */; };
 		84A346F924D75AED004F3F20 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F824D75AED004F3F20 /* Preview Assets.xcassets */; };
 		84A346FC24D75AED004F3F20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346FA24D75AED004F3F20 /* LaunchScreen.storyboard */; };
+		84D4B6AE24DAC24400066DEE /* WatchToPhoneCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -115,6 +116,7 @@
 		84A346F824D75AED004F3F20 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84A346FB24D75AED004F3F20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84A346FD24D75AED004F3F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchToPhoneCommunicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		845DA49324D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension */ = {
 			isa = PBXGroup;
 			children = (
+				84D4B6B024DAC28400066DEE /* Models */,
 				845DA4BC24D9842900ED5BBB /* Views */,
 				845DA49624D96D8600ED5BBB /* HostingController.swift */,
 				845DA49824D96D8600ED5BBB /* ExtensionDelegate.swift */,
@@ -259,6 +262,14 @@
 				84A346F824D75AED004F3F20 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		84D4B6B024DAC28400066DEE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -397,6 +408,7 @@
 			files = (
 				845DA4B424D96DC200ED5BBB /* utilities.swift in Sources */,
 				845DA4B324D96DC200ED5BBB /* Garden.swift in Sources */,
+				84D4B6AE24DAC24400066DEE /* WatchToPhoneCommunicator.swift in Sources */,
 				845DA49724D96D8600ED5BBB /* HostingController.swift in Sources */,
 				845DA49524D96D8600ED5BBB /* ContentView.swift in Sources */,
 				845DA4B924D9711000ED5BBB /* PlantDetailView.swift in Sources */,
