@@ -53,36 +53,30 @@ class WatchToPhoneCommunicator: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         print("Recieved applicationContext")
-        if let plantsData = applicationContext["plants"] as? [String: Any] {
-            let garden = Garden()
-            garden.plants = convertApplicationContext(plantsData)
+
+        let garden = Garden()
+        let dataManager = WatchConnectivityDataManager()
+        
+        if let plantsData = applicationContext[ApplicationContextDataType.allPlants.rawValue] as? [[String: Any]] {
+            
+            garden.plants = dataManager.convert(plantsData)
             garden.savePlants()
             print("parsed \(garden.plants.count) plants")
+            
             if let gardenDelegate = self.gardenDelegate {
                 gardenDelegate.gardenPlantsWereUpdated()
             }
+            
+        } else if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
+            
+            
+            /// TODO: update Watch data with plant information in `plantsData`.
+            
+            
+            
         } else {
             print("Plants data not found in applicationContext")
         }
-        
-    }
-    
-    
-    func convertApplicationContext(_ plantsApplicationContext: [String: Any]) -> [Plant] {
-        var plants = [Plant]()
-        
-        for (idString, plantData) in plantsApplicationContext {
-            print("Parsing data for plant: \(idString)")
-            if let plantData = plantData as? [String: Any] {
-                var plant = Plant(id: idString, name: plantData["name"] as? String ?? "No name")
-                plant.watered = plantData["watered"] as? Bool ?? false
-                let imageName = plantData["imageName"] as? String ?? nil
-                plant.imageName = imageName == "nil" ? nil : imageName
-                plants.append(plant)
-            }
-        }
-        
-        return plants
     }
     
     

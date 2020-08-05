@@ -18,12 +18,15 @@ struct ContentView: View {
         NavigationView {
             List {
                 ForEach(garden.plants) { plant in
-                    NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant)) {
+                    NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant, watchCommunicator: self.watchCommunicator)) {
                         PlantRow(garden: self.garden, plant: plant)
                     }
                 }
             }
             .navigationBarTitle("Garden")
+        }
+        .onAppear {
+            self.watchCommunicator.replace(self.garden.plants)
         }
     }
 }

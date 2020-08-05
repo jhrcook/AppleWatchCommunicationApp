@@ -13,9 +13,12 @@ struct PlantDetailView: View {
     @ObservedObject var garden: Garden
     @State var plant: Plant
     
-    init(garden: Garden, plant: Plant) {
+    var watchCommunicator: PhoneToWatchCommunicator?
+    
+    init(garden: Garden, plant: Plant, watchCommunicator: PhoneToWatchCommunicator? = nil) {
         self.garden = garden
         _plant = State(initialValue: plant)
+        self.watchCommunicator = watchCommunicator
     }
     
     var body: some View {

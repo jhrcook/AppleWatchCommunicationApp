@@ -39,6 +39,8 @@
 		84A346F924D75AED004F3F20 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F824D75AED004F3F20 /* Preview Assets.xcassets */; };
 		84A346FC24D75AED004F3F20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346FA24D75AED004F3F20 /* LaunchScreen.storyboard */; };
 		84D4B6AE24DAC24400066DEE /* WatchToPhoneCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */; };
+		84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
+		84D4B6B424DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +119,7 @@
 		84A346FB24D75AED004F3F20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84A346FD24D75AED004F3F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchToPhoneCommunicator.swift; sourceTree = "<group>"; };
+		84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +153,7 @@
 		845DA49324D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension */ = {
 			isa = PBXGroup;
 			children = (
-				84D4B6B024DAC28400066DEE /* Models */,
+				84D4B6B024DAC28400066DEE /* WatchConnectivity */,
 				845DA4BC24D9842900ED5BBB /* Views */,
 				845DA49624D96D8600ED5BBB /* HostingController.swift */,
 				845DA49824D96D8600ED5BBB /* ExtensionDelegate.swift */,
@@ -177,7 +180,6 @@
 			children = (
 				8442511524D830B9002292D7 /* Plant.swift */,
 				8442511B24D832A6002292D7 /* Garden.swift */,
-				845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -242,6 +244,7 @@
 		84A346EE24D75AEB004F3F20 /* AppleWatchCommunicationApp */ = {
 			isa = PBXGroup;
 			children = (
+				84D4B6B124DAD81400066DEE /* WatchConnectivity */,
 				84A346EF24D75AEB004F3F20 /* AppDelegate.swift */,
 				84A346F124D75AEB004F3F20 /* SceneDelegate.swift */,
 				845DA4BB24D9841000ED5BBB /* Views */,
@@ -264,12 +267,21 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		84D4B6B024DAC28400066DEE /* Models */ = {
+		84D4B6B024DAC28400066DEE /* WatchConnectivity */ = {
 			isa = PBXGroup;
 			children = (
 				84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */,
 			);
-			path = Models;
+			path = WatchConnectivity;
+			sourceTree = "<group>";
+		};
+		84D4B6B124DAD81400066DEE /* WatchConnectivity */ = {
+			isa = PBXGroup;
+			children = (
+				845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */,
+				84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */,
+			);
+			path = WatchConnectivity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -418,6 +430,7 @@
 				845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */,
 				845DA49D24D96D8600ED5BBB /* NotificationView.swift in Sources */,
 				845DA49F24D96D8600ED5BBB /* ComplicationController.swift in Sources */,
+				84D4B6B424DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +448,7 @@
 				84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */,
 				845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */,
 				84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */,
+				84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
