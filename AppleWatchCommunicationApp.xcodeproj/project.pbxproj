@@ -41,6 +41,8 @@
 		84D4B6AE24DAC24400066DEE /* WatchToPhoneCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */; };
 		84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
 		84D4B6B424DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
+		84E46B7C24DC0F74009E12C5 /* GardenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */; };
+		84E46B7D24DC0F74009E12C5 /* GardenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +122,7 @@
 		84A346FD24D75AED004F3F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84D4B6AD24DAC24400066DEE /* WatchToPhoneCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchToPhoneCommunicator.swift; sourceTree = "<group>"; };
 		84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityDataManager.swift; sourceTree = "<group>"; };
+		84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GardenDelegate.swift; path = AppleWatchCommunicationApp/GardenDelegate.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +281,7 @@
 		84D4B6B124DAD81400066DEE /* WatchConnectivity */ = {
 			isa = PBXGroup;
 			children = (
+				84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */,
 				845DA4BF24D9849900ED5BBB /* PhoneToWatchCommunicator.swift */,
 				84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */,
 			);
@@ -419,6 +423,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				845DA4B424D96DC200ED5BBB /* utilities.swift in Sources */,
+				84E46B7D24DC0F74009E12C5 /* GardenDelegate.swift in Sources */,
 				845DA4B324D96DC200ED5BBB /* Garden.swift in Sources */,
 				84D4B6AE24DAC24400066DEE /* WatchToPhoneCommunicator.swift in Sources */,
 				845DA49724D96D8600ED5BBB /* HostingController.swift in Sources */,
@@ -445,6 +450,7 @@
 				845DA4C024D9849900ED5BBB /* PhoneToWatchCommunicator.swift in Sources */,
 				8442511A24D83218002292D7 /* ImagePicker.swift in Sources */,
 				8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */,
+				84E46B7C24DC0F74009E12C5 /* GardenDelegate.swift in Sources */,
 				84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */,
 				845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */,
 				84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */,

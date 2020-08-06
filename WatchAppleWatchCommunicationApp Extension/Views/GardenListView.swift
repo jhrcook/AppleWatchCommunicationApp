@@ -18,7 +18,7 @@ struct GardenListView: View, GardenDelegate {
     var body: some View {
         List {
             ForEach(garden.plants) { plant in
-                NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant)) {
+                NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant, phoneCommunicator: self.phoneCommunicator)) {
                     HStack {
                         plant.loadPlantImage()
                             .resizable()

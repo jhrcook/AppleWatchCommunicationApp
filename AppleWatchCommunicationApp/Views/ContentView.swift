@@ -9,8 +9,8 @@
 import SwiftUI
 
 
-struct ContentView: View {
-    
+struct ContentView: View, GardenDelegate {
+        
     @ObservedObject var garden = Garden()
     var watchCommunicator = PhoneToWatchCommunicator()
     
@@ -38,8 +38,14 @@ struct ContentView: View {
             }
         }
         .onAppear {
+            self.watchCommunicator.gardenDelegate = self
             self.watchCommunicator.replace(self.garden.plants)
         }
+    }
+    
+    func gardenPlantsWereUpdated() {
+        garden.reloadPlants()
+        garden.sortPlants()
     }
 }
 

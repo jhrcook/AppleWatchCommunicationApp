@@ -13,9 +13,12 @@ struct PlantDetailView: View {
     @ObservedObject var garden: Garden
     @State private var plant: Plant
     
-    init(garden: Garden, plant: Plant) {
+    var phoneCommunicator: WatchToPhoneCommunicator?
+    
+    init(garden: Garden, plant: Plant, phoneCommunicator: WatchToPhoneCommunicator? = nil) {
         self.garden = garden
         self._plant = State(initialValue: plant)
+        self.phoneCommunicator = phoneCommunicator
     }
     
     var body: some View {
@@ -33,6 +36,9 @@ struct PlantDetailView: View {
                     if !self.plant.watered {
                         self.plant.watered = true
                         self.garden.update(self.plant)
+                        if let phoneCommunicator = self.phoneCommunicator {
+                            phoneCommunicator.update([self.plant])
+                        }
                     }
                 }) {
                     ZStack {
@@ -57,7 +63,6 @@ struct PlantDetailView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
                         }
                     }
-                    
                 }
                 .buttonStyle(PlainButtonStyle())
             }

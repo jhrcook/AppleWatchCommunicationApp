@@ -10,10 +10,6 @@ import Foundation
 import WatchConnectivity
 
 
-protocol GardenDelegate {
-    func gardenPlantsWereUpdated() -> Void
-}
-
 class WatchToPhoneCommunicator: NSObject, WCSessionDelegate {
     
     private let session: WCSession
@@ -82,7 +78,32 @@ class WatchToPhoneCommunicator: NSObject, WCSessionDelegate {
             print("Plants data not found in applicationContext")
         }
     }
+}
+
+
+extension WatchToPhoneCommunicator {
+    
+    /// Update specific plants on the watch.
+    /// - Parameter plants: An array of plants to update.
+    func update(_ plants: [Plant]) {
+        updatePlantApplicationContext(plants, asDataType: .updatePlants)
+    }
     
     
-    
+    /// Send new plant information using the `updateApplicationContext()`method for the watch
+    /// connectivity session
+    /// - Parameters:
+    ///   - plants: An array of plants to update.
+    ///   - dataType: What tiype of data is being sent.
+    private func updatePlantApplicationContext(_ plants: [Plant], asDataType dataType: ApplicationContextDataType) {
+        let dataManager = WatchConnectivityDataManager()
+        let applicationContext = [dataType.rawValue: dataManager.convert(plants)]
+        do {
+            try session.updateApplicationContext(applicationContext)
+            print("Successfully sent plant data to watch.")
+        } catch {
+            print("Error in updating application context.")
+            print("error: \(error.localizedDescription)")
+        }
+    }
 }

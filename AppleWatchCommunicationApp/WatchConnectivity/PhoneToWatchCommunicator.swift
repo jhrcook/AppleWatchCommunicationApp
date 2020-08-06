@@ -9,9 +9,11 @@
 import Foundation
 import WatchConnectivity
 
+
 class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
     
     private let session: WCSession
+    var gardenDelegate: GardenDelegate? = nil
     
     init(session: WCSession = .default) {
         self.session = session
@@ -42,6 +44,8 @@ class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
     }
     
     
+    /// Is the Watch supported, paired, and app installed?
+    /// - Returns: Boolean value to answer this question.
     func checkConnectivityWithWatch() -> Bool {
         return WCSession.isSupported() && session.isPaired && session.isWatchAppInstalled
     }
@@ -85,6 +89,28 @@ extension PhoneToWatchCommunicator {
         } catch {
             print("Error in updating application context.")
             print("error: \(error.localizedDescription)")
+        }
+    }
+}
+
+
+extension PhoneToWatchCommunicator {
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        
+        let garden = Garden()
+        let dataManager = WatchConnectivityDataManager()
+        
+        if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
+            let plants = dataManager.convert(plantsData)
+            for plant in plants {
+                garden.update(plant)
+            }
+            
+            if let gardenDelegate = self.gardenDelegate {
+                gardenDelegate.gardenPlantsWereUpdated()
+            }
+        } else {
+            print("Plants data not found in applicationContext")
         }
     }
 }
