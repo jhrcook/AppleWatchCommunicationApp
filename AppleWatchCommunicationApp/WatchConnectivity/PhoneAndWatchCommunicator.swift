@@ -1,8 +1,8 @@
 //
-//  PhoneToWatchCommunicator.swift
+//  PhoneAndWatchCommunicator.swift
 //  AppleWatchCommunicationApp
 //
-//  Created by Joshua on 8/4/20.
+//  Created by Joshua on 8/6/20.
 //  Copyright © 2020 Joshua Cook. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import WatchConnectivity
 
 
-class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
+class PhoneAndWatchCommunicator: NSObject, WCSessionDelegate {
     
     private let session: WCSession
     var gardenDelegate: GardenDelegate? = nil
@@ -32,8 +32,10 @@ class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
         }
         print("Activated without error.")
     }
-    
-    
+}
+
+#if os(iOS)
+extension PhoneAndWatchCommunicator {
     func sessionDidDeactivate(_ session: WCSession) {
         print("Session deactivated.")
     }
@@ -50,10 +52,12 @@ class PhoneToWatchCommunicator: NSObject, WCSessionDelegate {
         return WCSession.isSupported() && session.isPaired && session.isWatchAppInstalled
     }
 }
+#endif
 
 
-extension PhoneToWatchCommunicator {
+extension PhoneAndWatchCommunicator {
     
+    #if os(iOS)
     /// Send the latest plant information to the watch and overwrite its data.
     /// - Parameter plants: An array of plants to update.
     ///
@@ -62,6 +66,7 @@ extension PhoneToWatchCommunicator {
     func replace(_ plants: [Plant]) {
         updatePlantApplicationContext(plants, asDataType: .allPlants)
     }
+    #endif
     
     /// Update specific plants on the watch.
     /// - Parameter plants: An array of plants to update.
@@ -76,10 +81,13 @@ extension PhoneToWatchCommunicator {
     ///   - plants: An array of plants to update.
     ///   - dataType: What tiype of data is being sent.
     private func updatePlantApplicationContext(_ plants: [Plant], asDataType dataType: ApplicationContextDataType) {
+        
+        #if os(iOS)
         if !checkConnectivityWithWatch() {
             print("Watch not connected.")
             return
         }
+        #endif
         
         let dataManager = WatchConnectivityDataManager()
         let applicationContext = [dataType.rawValue: dataManager.convert(plants)]
@@ -94,14 +102,27 @@ extension PhoneToWatchCommunicator {
 }
 
 
-extension PhoneToWatchCommunicator {
+extension PhoneAndWatchCommunicator {
     func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-        
+        print("Recieved applicationContext")
+
         let garden = Garden()
         let dataManager = WatchConnectivityDataManager()
         
-        if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
+        if let plantsData = applicationContext[ApplicationContextDataType.allPlants.rawValue] as? [[String: Any]] {
+            
+            garden.plants = dataManager.convert(plantsData)
+            garden.savePlants()
+            print("parsed \(garden.plants.count) plants")
+            
+            if let gardenDelegate = self.gardenDelegate {
+                gardenDelegate.gardenPlantsWereUpdated()
+            }
+            
+        } else if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
+            
             let plants = dataManager.convert(plantsData)
+            print("Updating \(plants.count) plants")
             for plant in plants {
                 garden.update(plant)
             }
@@ -109,8 +130,10 @@ extension PhoneToWatchCommunicator {
             if let gardenDelegate = self.gardenDelegate {
                 gardenDelegate.gardenPlantsWereUpdated()
             }
+            
         } else {
             print("Plants data not found in applicationContext")
         }
     }
 }
+

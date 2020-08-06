@@ -13,9 +13,9 @@ struct PlantDetailView: View {
     @ObservedObject var garden: Garden
     @State private var plant: Plant
     
-    var phoneCommunicator: WatchToPhoneCommunicator?
+    var phoneCommunicator: PhoneAndWatchCommunicator?
     
-    init(garden: Garden, plant: Plant, phoneCommunicator: WatchToPhoneCommunicator? = nil) {
+    init(garden: Garden, plant: Plant, phoneCommunicator: PhoneAndWatchCommunicator? = nil) {
         self.garden = garden
         self._plant = State(initialValue: plant)
         self.phoneCommunicator = phoneCommunicator

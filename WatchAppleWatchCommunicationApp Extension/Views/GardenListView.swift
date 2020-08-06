@@ -13,7 +13,7 @@ import SwiftUI
 struct GardenListView: View, GardenDelegate {
     
     @ObservedObject var garden: Garden
-    var phoneCommunicator: WatchToPhoneCommunicator
+    var phoneCommunicator: PhoneAndWatchCommunicator
     
     var body: some View {
         List {
@@ -47,6 +47,6 @@ struct GardenListView: View, GardenDelegate {
 
 struct GardenListView_Previews: PreviewProvider {
     static var previews: some View {
-        return GardenListView(garden: Garden(), phoneCommunicator: WatchToPhoneCommunicator())
+        return GardenListView(garden: Garden(), phoneCommunicator: PhoneAndWatchCommunicator())
     }
 }

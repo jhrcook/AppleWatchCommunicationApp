@@ -12,7 +12,7 @@ import SwiftUI
 struct ContentView: View, GardenDelegate {
         
     @ObservedObject var garden = Garden()
-    var watchCommunicator = PhoneToWatchCommunicator()
+    var watchCommunicator = PhoneAndWatchCommunicator()
     
     var body: some View {
         NavigationView {
