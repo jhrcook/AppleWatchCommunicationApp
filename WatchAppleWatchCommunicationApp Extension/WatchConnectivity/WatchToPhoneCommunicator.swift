@@ -69,10 +69,14 @@ class WatchToPhoneCommunicator: NSObject, WCSessionDelegate {
             
         } else if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
             
+            let plants = dataManager.convert(plantsData)
+            for plant in plants {
+                garden.update(plant)
+            }
             
-            /// TODO: update Watch data with plant information in `plantsData`.
-            
-            
+            if let gardenDelegate = self.gardenDelegate {
+                gardenDelegate.gardenPlantsWereUpdated()
+            }
             
         } else {
             print("Plants data not found in applicationContext")

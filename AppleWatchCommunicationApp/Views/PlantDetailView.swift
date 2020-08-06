@@ -88,6 +88,7 @@ struct PlantDetailView: View {
     
     func updatePlant() {
         garden.update(plant, updatePlantOrder: false)
+        watchCommunicator?.update([plant])
     }
 }
 

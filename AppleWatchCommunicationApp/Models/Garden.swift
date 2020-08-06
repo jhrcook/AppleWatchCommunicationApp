@@ -64,9 +64,13 @@ class Garden: ObservableObject {
         }
     }
     
-    func update(_ plant: Plant, updatePlantOrder: Bool = true) {
-        let idx = plants.firstIndex(where: { $0.id == plant.id })!
-        plants[idx] = plant
+    func update(_ plant: Plant, addIfNew: Bool = true, updatePlantOrder: Bool = true) {
+        if let idx = plants.firstIndex(where: { $0.id == plant.id }) {
+            plants[idx] = plant
+        } else if addIfNew {
+            plants.append(plant)
+        }
+        
         if updatePlantOrder {
             sortPlants()
         }

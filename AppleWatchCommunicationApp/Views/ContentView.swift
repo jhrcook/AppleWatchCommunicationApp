@@ -16,14 +16,26 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            List {
-                ForEach(garden.plants) { plant in
-                    NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant, watchCommunicator: self.watchCommunicator)) {
-                        PlantRow(garden: self.garden, plant: plant)
+            VStack {
+                List {
+                    ForEach(garden.plants) { plant in
+                        NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant, watchCommunicator: self.watchCommunicator)) {
+                            PlantRow(garden: self.garden, plant: plant)
+                        }
                     }
                 }
+                .navigationBarTitle("Garden")
+                
+                Button("Remove all waterings") {
+                    for plant in self.garden.plants {
+                        var newPlant = plant
+                        newPlant.watered = false
+                        self.garden.update(newPlant)
+                    }
+                    self.watchCommunicator.update(self.garden.plants)
+                }
+                
             }
-            .navigationBarTitle("Garden")
         }
         .onAppear {
             self.watchCommunicator.replace(self.garden.plants)
