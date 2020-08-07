@@ -12,6 +12,9 @@
 		8442511A24D83218002292D7 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511924D83218002292D7 /* ImagePicker.swift */; };
 		8442511C24D832A6002292D7 /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511B24D832A6002292D7 /* Garden.swift */; };
 		8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511D24D837F5002292D7 /* PlantDetailView.swift */; };
+		845783EB24DD76970071755F /* GardenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EA24DD76970071755F /* GardenListView.swift */; };
+		845783EF24DD77CD0071755F /* TransferInfoTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */; };
+		845783F124DD79980071755F /* TransferInfoTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */; };
 		845DA48724D96D8200ED5BBB /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845DA48524D96D8200ED5BBB /* Interface.storyboard */; };
 		845DA48924D96D8600ED5BBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845DA48824D96D8600ED5BBB /* Assets.xcassets */; };
 		845DA49024D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 845DA48F24D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -93,6 +96,8 @@
 		8442511924D83218002292D7 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		8442511B24D832A6002292D7 /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
 		8442511D24D837F5002292D7 /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
+		845783EA24DD76970071755F /* GardenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenListView.swift; sourceTree = "<group>"; };
+		845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInfoTestingView.swift; sourceTree = "<group>"; };
 		845DA48324D96D8200ED5BBB /* WatchAppleWatchCommunicationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchAppleWatchCommunicationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845DA48624D96D8200ED5BBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		845DA48824D96D8600ED5BBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -190,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				84A346F324D75AEB004F3F20 /* ContentView.swift */,
+				845783EA24DD76970071755F /* GardenListView.swift */,
 				845DA4C124D9866100ED5BBB /* PlantRow.swift */,
 				8442511D24D837F5002292D7 /* PlantDetailView.swift */,
 			);
@@ -202,6 +208,7 @@
 				845DA49424D96D8600ED5BBB /* ContentView.swift */,
 				845DA4B524D96E0B00ED5BBB /* GardenListView.swift */,
 				845DA4B824D9711000ED5BBB /* PlantDetailView.swift */,
+				845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -430,6 +437,7 @@
 				845DA49B24D96D8600ED5BBB /* NotificationController.swift in Sources */,
 				845DA49924D96D8600ED5BBB /* ExtensionDelegate.swift in Sources */,
 				845DA4B224D96DC200ED5BBB /* Plant.swift in Sources */,
+				845783EF24DD77CD0071755F /* TransferInfoTestingView.swift in Sources */,
 				845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */,
 				845DA49D24D96D8600ED5BBB /* NotificationView.swift in Sources */,
 				845DA49F24D96D8600ED5BBB /* ComplicationController.swift in Sources */,
@@ -443,6 +451,7 @@
 			files = (
 				8442511C24D832A6002292D7 /* Garden.swift in Sources */,
 				84A346F024D75AEB004F3F20 /* AppDelegate.swift in Sources */,
+				845783EB24DD76970071755F /* GardenListView.swift in Sources */,
 				8442511824D831EF002292D7 /* utilities.swift in Sources */,
 				8442511624D830B9002292D7 /* Plant.swift in Sources */,
 				84E46B7F24DC142C009E12C5 /* PhoneAndWatchCommunicator.swift in Sources */,
@@ -450,6 +459,7 @@
 				8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */,
 				84E46B7C24DC0F74009E12C5 /* GardenDelegate.swift in Sources */,
 				84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */,
+				845783F124DD79980071755F /* TransferInfoTestingView.swift in Sources */,
 				845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */,
 				84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */,
 				84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */,

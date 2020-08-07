@@ -9,43 +9,11 @@
 import SwiftUI
 
 
-struct ContentView: View, GardenDelegate {
-        
-    @ObservedObject var garden = Garden()
-    var watchCommunicator = PhoneAndWatchCommunicator()
+struct ContentView: View {
     
     var body: some View {
-        NavigationView {
-            VStack {
-                List {
-                    ForEach(garden.plants) { plant in
-                        NavigationLink(destination: PlantDetailView(garden: self.garden, plant: plant, watchCommunicator: self.watchCommunicator)) {
-                            PlantRow(garden: self.garden, plant: plant)
-                        }
-                    }
-                }
-                .navigationBarTitle("Garden")
-                
-                Button("Remove all waterings") {
-                    for plant in self.garden.plants {
-                        var newPlant = plant
-                        newPlant.watered = false
-                        self.garden.update(newPlant)
-                    }
-                    self.watchCommunicator.update(self.garden.plants)
-                }
-                
-            }
-        }
-        .onAppear {
-            self.watchCommunicator.gardenDelegate = self
-            self.watchCommunicator.replace(self.garden.plants)
-        }
-    }
-    
-    func gardenPlantsWereUpdated() {
-        garden.reloadPlants()
-        garden.sortPlants()
+//        GardenListView(garden: Garden(), watchCommunicator: PhoneAndWatchCommunicator())
+        TransferInfoTestingView(communicator: PhoneAndWatchCommunicator())
     }
 }
 

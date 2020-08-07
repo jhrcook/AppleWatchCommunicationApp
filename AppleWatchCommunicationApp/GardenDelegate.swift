@@ -11,3 +11,9 @@ import Foundation
 protocol GardenDelegate {
     func gardenPlantsWereUpdated() -> Void
 }
+
+
+protocol TransferTestingDelegate {
+    func transferRecieved() -> Void
+    func transferDidFinish() -> Void
+}

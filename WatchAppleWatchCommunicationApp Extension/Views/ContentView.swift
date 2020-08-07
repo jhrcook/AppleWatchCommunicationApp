@@ -10,9 +10,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        GardenListView(garden: Garden(), phoneCommunicator: PhoneAndWatchCommunicator())
+//        GardenListView(garden: Garden(), phoneCommunicator: PhoneAndWatchCommunicator())
+        TransferInfoTestingView(communicator: PhoneAndWatchCommunicator())
     }
 }
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
