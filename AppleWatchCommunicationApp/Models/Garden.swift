@@ -74,6 +74,11 @@ class Garden: ObservableObject {
     
     
     func removePlants(withIds ids: [String]) {
+        for plant in plants {
+            if ids.contains(plant.id) {
+                plant.deletePlantImageFile()
+            }
+        }
         plants = plants.filter { !ids.contains($0.id) }
     }
 }

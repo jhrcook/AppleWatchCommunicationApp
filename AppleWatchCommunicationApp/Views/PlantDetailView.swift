@@ -118,6 +118,9 @@ struct PlantDetailView: View {
     func loadImage() {
         guard let inputImage = inputImage else { return }
         plant.savePlantImage(uiImage: inputImage)
+        if let communicator = watchCommunicator {
+            communicator.transferImage(for: plant)
+        }
         updatePlant()
         image = Image(uiImage: inputImage)
     }

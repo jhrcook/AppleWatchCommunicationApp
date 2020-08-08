@@ -74,6 +74,29 @@ extension PhoneAndWatchCommunicator {
         let info = [WCDataType.deletePlants.rawValue: plantIdsToDelete]
         sendMessageOrTransfer(info)
     }
+    
+    
+    func transferImage(for plant: Plant) {
+        if !checkConnectivityWithWatch() || session.activationState != .activated {
+            print("Cannot continue with transfer - returning early.")
+        }
+        
+        if let imageName = plant.imageName {
+            print("Transferring image file.")
+            let imageURL = getDocumentsDirectory().appendingPathComponent(imageName)
+            let plantInfo = WCDataManager().convert(plant)
+            session.transferFile(imageURL, metadata: [WCDataType.updatePlants.rawValue : plantInfo])
+        }
+    }
+    
+    
+    func session(_ session: WCSession, didFinish fileTransfer: WCSessionFileTransfer, error: Error?) {
+        if let error = error {
+            print("Error during file transfer: \(error.localizedDescription)")
+            return
+        }
+        print("File did finish transferring.")
+    }
 }
 #endif
 
@@ -170,6 +193,21 @@ extension PhoneAndWatchCommunicator {
         } catch {
             print("Failed to parse information: \(error.localizedDescription)")
             replyHandler([WCMessageResponse.response.rawValue : WCMessageResponse.WCResponseType.failure.rawValue])
+        }
+    }
+    
+    
+    func session(_ session: WCSession, didReceive file: WCSessionFile) {
+        print("Recieved file transfer.")
+        if let metadata = file.metadata {
+            if let plantInfo = metadata[WCDataType.updatePlants.rawValue] as? [String : Any] {
+                print("Updating plant and transfering file.")
+                var plant = WCDataManager().convert(plantInfo)
+                plant.savePlantImage(fromURL: file.fileURL)
+                let garden = Garden()
+                garden.update(plant)
+                updateGardenDelegateOnTheMainThread()
+            }
         }
     }
     

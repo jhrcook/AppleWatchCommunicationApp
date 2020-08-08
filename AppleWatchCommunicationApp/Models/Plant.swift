@@ -34,10 +34,14 @@ struct Plant: Codable, Identifiable {
 
 extension Plant {
     
+    func makeImageName() -> String {
+        return "\(UUID().uuidString)_image.jpeg"
+    }
+    
     mutating func savePlantImage(uiImage: UIImage) {
         if let data = uiImage.jpegData(compressionQuality: 1.0) {
             let oldImageName = self.imageName
-            imageName = "\(UUID().uuidString)_image.jpeg"
+            imageName = makeImageName()
             let fileName = getDocumentsDirectory().appendingPathComponent(imageName!)
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
@@ -50,6 +54,21 @@ extension Plant {
             if let oldImageName = oldImageName {
                 deleteFile(at: getDocumentsDirectory().appendingPathComponent(oldImageName))
             }
+        }
+    }
+    
+    mutating func savePlantImage(fromURL url: URL) {
+        let oldImageName = self.imageName
+        imageName = makeImageName()
+        let fileURL = getDocumentsDirectory().appendingPathComponent(imageName!)
+        do {
+            try FileManager().copyItem(at: url, to: fileURL)
+            print("Copied file to new location successfully")
+            if let oldImageName = oldImageName {
+                deleteFile(at: getDocumentsDirectory().appendingPathComponent(oldImageName))
+            }
+        } catch {
+            print("Unable to copy file to new location.")
         }
     }
     
