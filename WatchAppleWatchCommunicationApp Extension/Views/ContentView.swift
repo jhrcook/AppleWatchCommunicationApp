@@ -10,8 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-//        GardenListView(garden: Garden(), phoneCommunicator: PhoneAndWatchCommunicator())
-        TransferInfoTestingView(communicator: PhoneAndWatchCommunicator())
+        GardenListView(garden: Garden(), phoneCommunicator: PhoneAndWatchCommunicator())
     }
 }
 

@@ -13,8 +13,6 @@
 		8442511C24D832A6002292D7 /* Garden.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511B24D832A6002292D7 /* Garden.swift */; };
 		8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8442511D24D837F5002292D7 /* PlantDetailView.swift */; };
 		845783EB24DD76970071755F /* GardenListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EA24DD76970071755F /* GardenListView.swift */; };
-		845783EF24DD77CD0071755F /* TransferInfoTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */; };
-		845783F124DD79980071755F /* TransferInfoTestingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */; };
 		845DA48724D96D8200ED5BBB /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845DA48524D96D8200ED5BBB /* Interface.storyboard */; };
 		845DA48924D96D8600ED5BBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 845DA48824D96D8600ED5BBB /* Assets.xcassets */; };
 		845DA49024D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 845DA48F24D96D8600ED5BBB /* WatchAppleWatchCommunicationApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -40,8 +38,8 @@
 		84A346F624D75AED004F3F20 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F524D75AED004F3F20 /* Assets.xcassets */; };
 		84A346F924D75AED004F3F20 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84A346F824D75AED004F3F20 /* Preview Assets.xcassets */; };
 		84A346FC24D75AED004F3F20 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84A346FA24D75AED004F3F20 /* LaunchScreen.storyboard */; };
-		84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
-		84D4B6B424DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */; };
+		84D4B6B324DAD85200066DEE /* WCDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WCDataManager.swift */; };
+		84D4B6B424DAD85200066DEE /* WCDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D4B6B224DAD85200066DEE /* WCDataManager.swift */; };
 		84E46B7C24DC0F74009E12C5 /* GardenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */; };
 		84E46B7D24DC0F74009E12C5 /* GardenDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */; };
 		84E46B7F24DC142C009E12C5 /* PhoneAndWatchCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84E46B7E24DC142C009E12C5 /* PhoneAndWatchCommunicator.swift */; };
@@ -97,7 +95,6 @@
 		8442511B24D832A6002292D7 /* Garden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Garden.swift; sourceTree = "<group>"; };
 		8442511D24D837F5002292D7 /* PlantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantDetailView.swift; sourceTree = "<group>"; };
 		845783EA24DD76970071755F /* GardenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GardenListView.swift; sourceTree = "<group>"; };
-		845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferInfoTestingView.swift; sourceTree = "<group>"; };
 		845DA48324D96D8200ED5BBB /* WatchAppleWatchCommunicationApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchAppleWatchCommunicationApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		845DA48624D96D8200ED5BBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		845DA48824D96D8600ED5BBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -124,7 +121,7 @@
 		84A346F824D75AED004F3F20 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		84A346FB24D75AED004F3F20 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84A346FD24D75AED004F3F20 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityDataManager.swift; sourceTree = "<group>"; };
+		84D4B6B224DAD85200066DEE /* WCDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCDataManager.swift; sourceTree = "<group>"; };
 		84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GardenDelegate.swift; path = AppleWatchCommunicationApp/GardenDelegate.swift; sourceTree = SOURCE_ROOT; };
 		84E46B7E24DC142C009E12C5 /* PhoneAndWatchCommunicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAndWatchCommunicator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,7 +205,6 @@
 				845DA49424D96D8600ED5BBB /* ContentView.swift */,
 				845DA4B524D96E0B00ED5BBB /* GardenListView.swift */,
 				845DA4B824D9711000ED5BBB /* PlantDetailView.swift */,
-				845783EE24DD77CD0071755F /* TransferInfoTestingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -287,7 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				84E46B7B24DC0F74009E12C5 /* GardenDelegate.swift */,
-				84D4B6B224DAD85200066DEE /* WatchConnectivityDataManager.swift */,
+				84D4B6B224DAD85200066DEE /* WCDataManager.swift */,
 				84E46B7E24DC142C009E12C5 /* PhoneAndWatchCommunicator.swift */,
 			);
 			path = WatchConnectivity;
@@ -437,11 +433,10 @@
 				845DA49B24D96D8600ED5BBB /* NotificationController.swift in Sources */,
 				845DA49924D96D8600ED5BBB /* ExtensionDelegate.swift in Sources */,
 				845DA4B224D96DC200ED5BBB /* Plant.swift in Sources */,
-				845783EF24DD77CD0071755F /* TransferInfoTestingView.swift in Sources */,
 				845DA4B624D96E0B00ED5BBB /* GardenListView.swift in Sources */,
 				845DA49D24D96D8600ED5BBB /* NotificationView.swift in Sources */,
 				845DA49F24D96D8600ED5BBB /* ComplicationController.swift in Sources */,
-				84D4B6B424DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */,
+				84D4B6B424DAD85200066DEE /* WCDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,10 +454,9 @@
 				8442511E24D837F5002292D7 /* PlantDetailView.swift in Sources */,
 				84E46B7C24DC0F74009E12C5 /* GardenDelegate.swift in Sources */,
 				84A346F224D75AEB004F3F20 /* SceneDelegate.swift in Sources */,
-				845783F124DD79980071755F /* TransferInfoTestingView.swift in Sources */,
 				845DA4C224D9866100ED5BBB /* PlantRow.swift in Sources */,
 				84A346F424D75AEB004F3F20 /* ContentView.swift in Sources */,
-				84D4B6B324DAD85200066DEE /* WatchConnectivityDataManager.swift in Sources */,
+				84D4B6B324DAD85200066DEE /* WCDataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,6 @@ class PhoneAndWatchCommunicator: NSObject, WCSessionDelegate {
     
     private let session: WCSession
     var gardenDelegate: GardenDelegate? = nil
-    var transferTestingDelegate: TransferTestingDelegate? = nil
     
     init(session: WCSession = .default) {
         self.session = session
@@ -28,17 +27,26 @@ class PhoneAndWatchCommunicator: NSObject, WCSessionDelegate {
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         if let error = error {
-            print("error during activation: \(error.localizedDescription)")
+            print("error during Watch Connectivity activation: \(error.localizedDescription)")
             return
         }
-        print("Activated without error.")
+        print("Watch Connectivity session activated without error.")
     }
 }
 
 
+// iOS specific methods
+
+#if os(iOS)
 extension PhoneAndWatchCommunicator {
     
-    #if os(iOS)
+    /// Is the Watch supported, paired, and app installed?
+    /// - Returns: Boolean value to answer this question.
+    func checkConnectivityWithWatch() -> Bool {
+        return WCSession.isSupported() && session.isPaired && session.isWatchAppInstalled
+    }
+    
+    
     /// Send the latest plant information to the watch and overwrite its data.
     /// - Parameter plants: An array of plants to update.
     ///
@@ -46,8 +54,8 @@ extension PhoneAndWatchCommunicator {
     /// set of plants, use `update(_: [Plant])`.
     func replaceAllDataOnWatch(withPlants plants: [Plant]) {
         if session.activationState == .activated && session.isReachable {
-            let dataManager = WatchConnectivityDataManager()
-            let info = [ApplicationContextDataType.allPlants.rawValue: dataManager.convert(plants)]
+            let dataManager = WCDataManager()
+            let info = [WCDataType.replaceAllPlants.rawValue: dataManager.convert(plants)]
             do {
                 try session.updateApplicationContext(info)
                 print("Successfully sent application context.")
@@ -56,152 +64,162 @@ extension PhoneAndWatchCommunicator {
             }
         }
     }
-    #endif
     
     
+    /// Delete plants on the watch.
+    /// - Parameter plants: The plants to be deleted.
+    func delete(_ plants: [Plant]) {
+        print("Sending request to delete \(plants.count) plant(s).")
+        let plantIdsToDelete = plants.map { $0.id }
+        let info = [WCDataType.deletePlants.rawValue: plantIdsToDelete]
+        sendMessageOrTransfer(info)
+    }
+}
+#endif
+
+
+// Sending data
+
+extension PhoneAndWatchCommunicator {
     /// Update specific plants on the watch.
     /// - Parameter plants: An array of plants to update.
     func update(_ plants: [Plant]) {
-        let dataManager = WatchConnectivityDataManager()
-        sendUpdates(dataManager.convert(plants), asDataType: .updatePlants)
+        print("Sending request to update \(plants.count) plant(s).")
+        let dataManager = WCDataManager()
+        let info = [WCDataType.updatePlants.rawValue: dataManager.convert(plants)]
+        sendMessageOrTransfer(info)
     }
     
     
-    private func sendUpdates(_ info: [[String : Any]], asDataType dataType: ApplicationContextDataType) {
+    private func sendMessageOrTransfer(_ info: [String: Any]) {
         #if os(iOS)
         if !checkConnectivityWithWatch() {
-            print("No device paired with phone - returning early.")
-            return
-        }
-        #endif
-        
-        let info = [dataType.rawValue: info]
-        
-        if session.activationState == .activated && session.isReachable {
-            session.sendMessage(info, replyHandler: nil) { error in
-                print("Error in sending message :\(error.localizedDescription)")
-            }
-        } else if session.activationState == .activated {
-            session.transferUserInfo(info)
-        }
-    }
-    
-    func sendTransferTest() {
-        #if os(iOS)
-        if !checkConnectivityWithWatch() {
-            print("No device paired with phone - returning early.")
-            return
+            print("No device paired with phone - returning early")
         }
         #endif
         
         if session.activationState == .activated {
-            print("Initiating transfer.")
-            session.transferUserInfo(["testmessage": "Here is my test message"])
-        } else {
-            print("Session is inactive - transfer not initiated.")
+            print("Attempting to send message.")
+            session.sendMessage(info, replyHandler: { replyMessage in
+                if let response = PhoneAndWatchCommunicator.messageReplyType(replyMessage) {
+                    switch response {
+                    case .success:
+                        print("Message successfully recieved.")
+                    default:
+                        print("Message failed, attempting transfer.")
+                        self.session.transferUserInfo(info)
+                    }
+                }
+            }, errorHandler: { errorHandler in
+                print("Error on sending message: \(errorHandler.localizedDescription)")
+                print("\tAttempting transfer.")
+                self.session.transferUserInfo(info)
+            })
         }
     }
+    
     
     func session(_ session: WCSession, didFinish userInfoTransfer: WCSessionUserInfoTransfer, error: Error?) {
         if let error = error {
-            print("Transfering user info finished with error: \(error.localizedDescription)")
-            return
+            print("Error transfering user info: \(error.localizedDescription)")
+            print("user info of failed transfer: \(userInfoTransfer.userInfo)")
         }
-        
-        print("User info transfer completed successfully")
-        
-        if let delegate = self.transferTestingDelegate {
-            DispatchQueue.main.async {
-                delegate.transferDidFinish()
-            }
-        }
-        
-        print(userInfoTransfer.userInfo)
-        print("number of outstanding user info transfers: \(session.outstandingUserInfoTransfers.count)")
-        if session.outstandingUserInfoTransfers.count > 0 {
-            print("outstanding transfers:")
-            for transfer in session.outstandingUserInfoTransfers {
-                print("   \(transfer.userInfo)")
-            }
-        }
+        print("Did finish transfering user infomation")
     }
     
-    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-        print("Recieved user info!")
-        
-        if let delegate = self.transferTestingDelegate {
-            DispatchQueue.main.async {
-                delegate.transferRecieved()
+    
+    static func messageReplyType(_ replyMessage: [String : Any]) -> WCMessageResponse.WCResponseType? {
+        if let response = replyMessage[WCMessageResponse.response.rawValue] as? String {
+            if let responseType = WCMessageResponse.WCResponseType(rawValue: response) {
+                return responseType
             }
         }
-        
-        print(userInfo)
+        return nil
     }
 }
 
 
+// Recieving data
+
 extension PhoneAndWatchCommunicator {
-//    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
-//        print("Recieved applicationContext")
-//
-//        let garden = Garden()
-//        let dataManager = WatchConnectivityDataManager()
-//
-//        if let plantsData = applicationContext[ApplicationContextDataType.allPlants.rawValue] as? [[String: Any]] {
-//            garden.plants = dataManager.convert(plantsData)
-//            garden.savePlants()
-//            print("parsed \(garden.plants.count) plants")
-//            if let gardenDelegate = self.gardenDelegate {
-//                gardenDelegate.gardenPlantsWereUpdated()
-//            }
-//        } else if let plantsData = applicationContext[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
-//            let plants = dataManager.convert(plantsData)
-//            print("Updating \(plants.count) plants")
-//            for plant in plants {
-//                garden.update(plant)
-//            }
-//            if let gardenDelegate = self.gardenDelegate {
-//                gardenDelegate.gardenPlantsWereUpdated()
-//            }
-//        } else {
-//            print("Plants data not found in applicationContext")
-//        }
-//    }
-//
-//    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
-//        print("Recieved message.")
-//
-//        let garden = Garden()
-//        let dataManager = WatchConnectivityDataManager()
-//
-//        if let plantsData = message[ApplicationContextDataType.allPlants.rawValue] as? [[String: Any]] {
-//            garden.plants = dataManager.convert(plantsData)
-//            garden.savePlants()
-//            print("parsed \(garden.plants.count) plants")
-//            if let gardenDelegate = self.gardenDelegate {
-//                gardenDelegate.gardenPlantsWereUpdated()
-//            }
-//        } else if let plantsData = message[ApplicationContextDataType.updatePlants.rawValue] as? [[String: Any]] {
-//            let plants = dataManager.convert(plantsData)
-//            print("Updating \(plants.count) plants")
-//            for plant in plants {
-//                garden.update(plant)
-//            }
-//            if let gardenDelegate = self.gardenDelegate {
-//                gardenDelegate.gardenPlantsWereUpdated()
-//            }
-//        } else {
-//            print("Plants data not found in message.")
-//            print(message)
-//        }
-//    }
+    
+    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+        print("Application context recieved.")
+        if let plantInfo = applicationContext[WCDataType.replaceAllPlants.rawValue] as? [[String : Any]] {
+            let garden = Garden()
+            garden.plants = WCDataManager().convert(plantInfo)
+            print("Plant data was updated with application context.")
+            updateGardenDelegateOnTheMainThread()
+        }
+    }
     
     
-    /// TODO: Rewrite data reception methods for new system.
-    /// TODO: Need to figure out issues with `transfer...` methods.
+    func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        do {
+            try parseIncomingInformation(userInfo)
+        } catch {
+            print("Failed to parse information: \(error.localizedDescription)")
+        }
+    }
     
     
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
+        do {
+            try parseIncomingInformation(message)
+            replyHandler([WCMessageResponse.response.rawValue : WCMessageResponse.WCResponseType.success.rawValue])
+        } catch {
+            print("Failed to parse information: \(error.localizedDescription)")
+            replyHandler([WCMessageResponse.response.rawValue : WCMessageResponse.WCResponseType.failure.rawValue])
+        }
+    }
     
+    
+    /// Parse incoming data from messages or user info transfers.
+    /// - Parameter info: The information in a dictionary.
+    /// - Throws: If the data fails to parse an error is thrown.
+    func parseIncomingInformation(_ info: [String : Any]) throws {
+        if let plantsToDelete = info[WCDataType.deletePlants.rawValue] as? [String] {
+            print("Recieved \(plantsToDelete.count) plants to delete.")
+            deletePlantsFromGarden(withPlantIds: plantsToDelete)
+        } else if let updatedPlantInfo = info[WCDataType.updatePlants.rawValue] as? [[String : Any]] {
+            print("Recieved data on plants to update.")
+            updatePlantsInGarden(withPlantInfo: updatedPlantInfo)
+        } else {
+            throw WCDataParsingError.unknownDataType
+        }
+        updateGardenDelegateOnTheMainThread()
+    }
+    
+    
+    /// Delete the plants from the garden information on the device.
+    /// - Parameter plantIds: An string array of `Plant.id`.
+    private func deletePlantsFromGarden(withPlantIds plantIds: [String]) {
+        let garden = Garden()
+        garden.removePlants(withIds: plantIds)
+        garden.savePlants()
+    }
+    
+    
+    /// Update hthe plants in the garden on the local device.
+    /// - Parameter plantInfo: An array of dictionaries with the plant information.
+    private func updatePlantsInGarden(withPlantInfo plantInfo: [[String : Any]]) {
+        let plants = WCDataManager().convert(plantInfo)
+        let garden = Garden()
+        for plant in plants {
+            garden.update(plant, addIfNew: true, updatePlantOrder: false)
+        }
+        garden.sortPlants()
+        garden.savePlants()
+    }
+    
+    
+    private func updateGardenDelegateOnTheMainThread() {
+        if let gardenDelegate = gardenDelegate {
+            DispatchQueue.main.async {
+                gardenDelegate.gardenPlantsWereUpdated()
+            }
+        }
+    }
 }
 
 
@@ -216,12 +234,7 @@ extension PhoneAndWatchCommunicator {
     func sessionDidBecomeInactive(_ session: WCSession) {
         print("Session did become inactive.")
     }
-    
-    
-    /// Is the Watch supported, paired, and app installed?
-    /// - Returns: Boolean value to answer this question.
-    func checkConnectivityWithWatch() -> Bool {
-        return WCSession.isSupported() && session.isPaired && session.isWatchAppInstalled
-    }
 }
 #endif
+
+

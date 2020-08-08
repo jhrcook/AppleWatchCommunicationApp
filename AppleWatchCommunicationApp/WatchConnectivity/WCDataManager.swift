@@ -8,15 +8,47 @@
 
 import Foundation
 
-enum ApplicationContextDataType: String {
-    case allPlants, updatePlants
+
+
+enum WCDataType: String {
+    case replaceAllPlants
+    case updatePlants
+    case deletePlants
 }
+
+
+
+enum WCMessageResponse: String {
+    case response
+    
+    enum WCResponseType: String {
+        case success
+        case failure
+    }
+}
+
+
+
+enum WCDataParsingError: Error {
+    case unknownDataType
+    
+    var errorDesciption: String? {
+        switch self {
+        case .unknownDataType:
+            return NSLocalizedString("Data type is unknown.", comment: "")
+        }
+    }
+}
+
+
 
 enum PlantDataValues: String {
     case id, name, watered, imageName
 }
 
-struct WatchConnectivityDataManager {
+
+
+struct WCDataManager {
     
     /// Convert from a plant to a dictionary.
     /// - Parameter plant: Plant
@@ -70,3 +102,4 @@ struct WatchConnectivityDataManager {
         return plants
     }
 }
+

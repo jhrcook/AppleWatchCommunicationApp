@@ -43,9 +43,7 @@ class Garden: ObservableObject {
     
     
     func reloadPlants() {
-        DispatchQueue.main.async {
-            self.plants = Garden.loadPlants()
-        }
+        self.plants = Garden.loadPlants()
     }
     
     
@@ -59,9 +57,7 @@ class Garden: ObservableObject {
     
     
     func sortPlants() {
-        DispatchQueue.main.async {
-            self.plants.sort { $0.name < $1.name }
-        }
+        self.plants.sort { $0.name < $1.name }
     }
     
     func update(_ plant: Plant, addIfNew: Bool = true, updatePlantOrder: Bool = true) {
@@ -74,6 +70,11 @@ class Garden: ObservableObject {
         if updatePlantOrder {
             sortPlants()
         }
+    }
+    
+    
+    func removePlants(withIds ids: [String]) {
+        plants = plants.filter { !ids.contains($0.id) }
     }
 }
 

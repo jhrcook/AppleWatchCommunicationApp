@@ -21,37 +21,60 @@ struct GardenListView: View, GardenDelegate {
                             PlantRow(garden: self.garden, plant: plant)
                         }
                     }
+                    .onDelete(perform: delete)
                 }
                 .navigationBarTitle("Garden")
                 
-                Button("Remove all waterings") {
-                    var newPlants = [Plant]()
-                    for plant in self.garden.plants {
-                        var newPlant = plant
-                        newPlant.watered = false
-                        newPlants.append(newPlant)
-                        self.garden.update(newPlant)
+                
+                HStack {
+                    Button("Clear waterings") {
+                        var newPlants = [Plant]()
+                        for plant in self.garden.plants {
+                            var newPlant = plant
+                            newPlant.watered = false
+                            newPlants.append(newPlant)
+                            self.garden.update(newPlant)
+                        }
+                        self.watchCommunicator.update(self.garden.plants)
                     }
-                    //                    self.watchCommunicator.replace(newPlants)
+                    .padding()
+                    
+                    Spacer()
+                    
+                    Button("Overwrite watch data") {
+                        self.watchCommunicator.replaceAllDataOnWatch(withPlants: self.garden.plants)
+                    }
+                    .padding()
+                    
+                    Spacer()
+                    
+                    Button("Make new plant") {
+                        let newPlant = Plant(name: "Plant \(self.garden.plants.count + 1)")
+                        self.garden.plants.append(newPlant)
+                        self.watchCommunicator.update([newPlant])
+                    }
                 }
-                .padding(20)
-                
-                Button("Test transfer") {
-                    self.watchCommunicator.sendTransferTest()
-                }
-                .padding(20)
-                
+                .padding(15)
             }
         }
         .onAppear {
             self.watchCommunicator.gardenDelegate = self
-            //            self.watchCommunicator.replace(self.garden.plants)
         }
     }
     
     func gardenPlantsWereUpdated() {
         garden.reloadPlants()
         garden.sortPlants()
+    }
+    
+    func delete(at offsets: IndexSet) {
+        var plantsToDelete = [Plant]()
+        offsets.forEach { i in
+            plantsToDelete.append(garden.plants[i])
+        }
+        garden.plants.remove(atOffsets: offsets)
+        watchCommunicator.delete(plantsToDelete)
+        
     }
 }
 
