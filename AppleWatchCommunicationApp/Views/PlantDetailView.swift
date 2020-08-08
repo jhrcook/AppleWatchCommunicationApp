@@ -15,74 +15,96 @@ struct PlantDetailView: View {
     
     var watchCommunicator: PhoneAndWatchCommunicator?
     
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
+    @State private var image: Image
+    
     init(garden: Garden, plant: Plant, watchCommunicator: PhoneAndWatchCommunicator? = nil) {
         self.garden = garden
         _plant = State(initialValue: plant)
         self.watchCommunicator = watchCommunicator
+        _image = State(initialValue: plant.loadPlantImage())
     }
     
     var body: some View {
-        VStack {
-            TextField("Plant name", text: $plant.name, onCommit: updatePlant)
-                .font(.title)
-                .multilineTextAlignment(.center)
-                .frame(width: 200)
-                .padding()
-                .background(Color(UIColor.secondarySystemBackground))
-                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-                .padding(.bottom, 50)
-            
-            plant.loadPlantImage()
-                .resizable()
-                .scaledToFit()
-                .frame(width: 350)
-                .clipShape(Circle())
-                .shadow(radius: 15)
-            
-            HStack {
-                Spacer()
-                Button(action: {}) {
-                    Text("Change image").foregroundColor(.gray)
-                }
-                .padding(.horizontal, 20)
-            }
-            
-            Spacer()
-            
-            Button(action: {
-                self.plant.watered = true
-                self.updatePlant()
-            }) {
+        GeometryReader { geo in
+            VStack {
+                TextField("Plant name", text: self.$plant.name, onCommit: self.updatePlant)
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+                    .frame(width: 200)
+                    .padding()
+                    .background(Color(UIColor.secondarySystemBackground))
+                    .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                    .padding(.bottom, 20)
+                
                 ZStack {
-                    if plant.watered {
+                    self.image
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: geo.size.width * 0.8, height: geo.size.width * 0.8)
+                        .clipShape(Circle())
+                        .shadow(radius: 15)
+                    
+                    VStack {
+                        Spacer()
                         HStack {
-                            Image(systemName: "hand.thumbsup").font(.largeTitle).foregroundColor(.blue)
-                            Text("Watered").font(.largeTitle).foregroundColor(.blue)
+                            Spacer()
+                            Button(action: {
+                                self.showingImagePicker = true
+                            }) {
+                                Image(systemName: "camera.circle")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 50)
+                            }
+                            .padding(.horizontal, 20)
                         }
-                        .frame(width: 200, height: 80)
-                        .background(
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .stroke(lineWidth: 3)
-                                .foregroundColor(.blue)
-                        )
-                    } else {
-                        HStack {
-                            Image(systemName: "cloud.rain").font(.largeTitle).foregroundColor(.white)
-                            Text("Water").font(.largeTitle).foregroundColor(.white)
-                        }
-                        .frame(width: 200, height: 80)
-                        .background(Color.blue)
-                        .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    }
+                    .sheet(isPresented: self.$showingImagePicker, onDismiss: self.loadImage) {
+                        ImagePicker(image: self.$inputImage)
                     }
                 }
+                .frame(width: geo.size.width, height: geo.size.width)
                 
+                
+                Spacer()
+                
+                Button(action: {
+                    self.plant.watered = true
+                    self.updatePlant()
+                }) {
+                    ZStack {
+                        if self.plant.watered {
+                            HStack {
+                                Image(systemName: "hand.thumbsup").font(.largeTitle).foregroundColor(.blue)
+                                Text("Watered").font(.largeTitle).foregroundColor(.blue)
+                            }
+                            .frame(width: 200, height: 70)
+                            .background(
+                                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                    .stroke(lineWidth: 3)
+                                    .foregroundColor(.blue)
+                            )
+                        } else {
+                            HStack {
+                                Image(systemName: "cloud.rain").font(.largeTitle).foregroundColor(.white)
+                                Text("Water").font(.largeTitle).foregroundColor(.white)
+                            }
+                            .frame(width: 200, height: 70)
+                            .background(Color.blue)
+                            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                        }
+                    }
+                    
+                }
+                .disabled(self.plant.watered)
+                
+                Spacer()
             }
-            .disabled(plant.watered)
-            
-            Spacer()
-        }
-        .onDisappear {
-            self.garden.sortPlants()
+            .onDisappear {
+                self.garden.sortPlants()
+            }
         }
     }
     
@@ -92,6 +114,14 @@ struct PlantDetailView: View {
             communicator.update([plant])
         }
     }
+    
+    func loadImage() {
+        guard let inputImage = inputImage else { return }
+        plant.savePlantImage(uiImage: inputImage)
+        updatePlant()
+        image = Image(uiImage: inputImage)
+    }
+    
 }
 
 struct PlantDetailView_Previews: PreviewProvider {

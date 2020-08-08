@@ -226,6 +226,15 @@
 			path = Notifications;
 			sourceTree = "<group>";
 		};
+		845E137C24DF382B004A76E1 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8442511724D831EF002292D7 /* utilities.swift */,
+				8442511924D83218002292D7 /* ImagePicker.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		84A346E324D75AEB004F3F20 = {
 			isa = PBXGroup;
 			children = (
@@ -253,9 +262,8 @@
 				84A346F124D75AEB004F3F20 /* SceneDelegate.swift */,
 				845DA4BB24D9841000ED5BBB /* Views */,
 				845DA4BA24D983A800ED5BBB /* Models */,
-				8442511724D831EF002292D7 /* utilities.swift */,
-				8442511924D83218002292D7 /* ImagePicker.swift */,
 				84D4B6B124DAD81400066DEE /* WatchConnectivity */,
+				845E137C24DF382B004A76E1 /* Utilities */,
 				84A346F524D75AED004F3F20 /* Assets.xcassets */,
 				84A346FA24D75AED004F3F20 /* LaunchScreen.storyboard */,
 				84A346FD24D75AED004F3F20 /* Info.plist */,

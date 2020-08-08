@@ -14,12 +14,14 @@ struct PlantRow: View {
     @ObservedObject var garden: Garden
     var plant: Plant
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         HStack {
             plant.loadPlantImage()
                 .resizable()
-                .scaledToFit()
-                .frame(width: 50)
+                .scaledToFill()
+                .frame(width: 50, height: 50)
                 .clipShape(Circle())
             
             Text(plant.name)
@@ -27,7 +29,7 @@ struct PlantRow: View {
             Spacer()
             
             Image(systemName: "cloud.rain")
-                .foregroundColor(.black)
+                .foregroundColor(colorScheme == .dark ? .white : .black)
                 .font(.system(size: 20, weight: .regular, design: .default))
                 .opacity(plant.watered ? 1 : 0)
         }

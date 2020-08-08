@@ -30,6 +30,8 @@ struct Plant: Codable, Identifiable {
 }
 
 
+// Images
+
 extension Plant {
     
     mutating func savePlantImage(uiImage: UIImage) {
