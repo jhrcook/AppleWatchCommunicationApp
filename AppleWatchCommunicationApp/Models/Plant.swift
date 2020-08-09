@@ -79,17 +79,6 @@ extension Plant {
         }
     }
     
-
-    private func deleteFile(at URL: URL) {
-        DispatchQueue.global(qos: .background).async {
-            do {
-                try FileManager.default.removeItem(at: URL)
-            } catch {
-                print("Unable to delete old image file: \(URL.absoluteString).")
-            }
-        }
-    }
-    
     
     func loadPlantImage() -> Image {
         if let imageName = self.imageName {

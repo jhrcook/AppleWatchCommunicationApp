@@ -31,11 +31,19 @@ enum WCMessageResponse: String {
 
 enum WCDataParsingError: Error {
     case unknownDataType
-    
-    var errorDesciption: String? {
+    case unableToReadImageData
+    case unableToCompressJPEGData
+}
+
+extension WCDataParsingError: LocalizedError {
+    public var errorDescription: String? {
         switch self {
         case .unknownDataType:
             return NSLocalizedString("Data type is unknown.", comment: "")
+        case .unableToReadImageData:
+            return NSLocalizedString("Unable to read image data from file.", comment: "")
+        case .unableToCompressJPEGData:
+            return NSLocalizedString("Unable to compress data to JPEG.", comment: "")
         }
     }
 }

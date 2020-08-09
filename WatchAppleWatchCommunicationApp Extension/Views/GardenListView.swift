@@ -22,9 +22,9 @@ struct GardenListView: View, GardenDelegate {
                     HStack {
                         plant.loadPlantImage()
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
+                            .frame(width: 50, height: 50)
                             .clipShape(Circle())
-                            .frame(height: 50)
                             .padding(5)
                         Text(plant.name)
                         Spacer()

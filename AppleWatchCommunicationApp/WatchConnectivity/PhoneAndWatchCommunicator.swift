@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 import WatchConnectivity
 
 
@@ -84,8 +85,14 @@ extension PhoneAndWatchCommunicator {
         if let imageName = plant.imageName {
             print("Transferring image file.")
             let imageURL = getDocumentsDirectory().appendingPathComponent(imageName)
-            let plantInfo = WCDataManager().convert(plant)
-            session.transferFile(imageURL, metadata: [WCDataType.updatePlants.rawValue : plantInfo])
+            do {
+                let smallerImageURL = try copyJPEG(at: imageURL, quality: .medium)
+                let plantInfo = WCDataManager().convert(plant)
+                update([plant])
+                session.transferFile(smallerImageURL, metadata: [WCDataType.updatePlants.rawValue : plantInfo])
+            } catch {
+                print("error in copying file to smaller size: \(error.localizedDescription)")
+            }
         }
     }
     
@@ -95,7 +102,8 @@ extension PhoneAndWatchCommunicator {
             print("Error during file transfer: \(error.localizedDescription)")
             return
         }
-        print("File did finish transferring.")
+        print("File did finish transferring - deleting compressed file.")
+        deleteFile(at: fileTransfer.file.fileURL)
     }
 }
 #endif
@@ -204,8 +212,6 @@ extension PhoneAndWatchCommunicator {
                 print("Updating plant and transfering file.")
                 var plant = WCDataManager().convert(plantInfo)
                 plant.savePlantImage(fromURL: file.fileURL)
-                let garden = Garden()
-                garden.update(plant)
                 updateGardenDelegateOnTheMainThread()
             }
         }
